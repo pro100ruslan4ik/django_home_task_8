@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<h1>Вы уверены, что хотите удалить"{{ user.first_name }} {{ user.last_name }}"?</h1>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Да, удалить</button>
+</form>
+<a href="{% url 'user_detail' user.pk %}">Отмена</a>
+{% endblock %}

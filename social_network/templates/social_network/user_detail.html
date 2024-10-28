@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+<h1>{{ user.first_name }} {{ user.last_name }}</h1>
+
+{% if user.avatar %}
+<img src="{{ user.avatar.url }}" alt="{{ user.first_name }}'s avatar" width="150" height="150">
+{% else %}
+<img src="{% static 'your_app/default_avatar.jpg' %}" alt="Default avatar" width="150" height="150">
+{% endif %}
+
+<p>Email: {{ user.email|default:"Нет email" }}</p>
+<p>Дата рождения: {{ user.date_of_birth }}</p>
+
+{% if user.groups.count > 0 %}
+<p>Группы:
+    {% for group in user.groups.all %}
+    {{ group.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+{% else %}
+<p>Группы: Нет групп.</p>
+{% endif %}
+
+<a href="{% url 'user_update' user.pk %}">Редактировать</a>
+<a href="{% url 'user_delete' user.pk %}">Удалить</a>
+{% endblock %}
